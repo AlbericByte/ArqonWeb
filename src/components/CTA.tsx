@@ -12,7 +12,7 @@ export default function CTA() {
           </span>
         </h2>
         <p className="text-text-muted text-lg max-w-[440px] mx-auto mb-10 leading-relaxed">
-          Open source. Apache 2.0 licensed. Ready for production.
+          Open source. Apache 2.0 licensed. Schedule for production.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a href="https://github.com/AlbericByte/ArqonDB" target="_blank" rel="noopener noreferrer"
@@ -20,7 +20,7 @@ export default function CTA() {
             View on GitHub
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </a>
-          <a href="https://docs.arqondb.io"
+          <a href="/docs"
             className="inline-flex items-center gap-1 text-primary text-sm font-medium hover:underline">
             Read the Docs
             <ArrowRight className="w-3.5 h-3.5" />

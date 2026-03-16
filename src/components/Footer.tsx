@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="flex items-center gap-6 text-xs text-text-light">
             <a href="https://github.com/AlbericByte/ArqonDB" target="_blank" rel="noopener noreferrer"
               className="hover:text-text transition-colors">GitHub</a>
-            <a href="https://docs.arqondb.io" className="hover:text-text transition-colors">Documentation</a>
+            <a href="/docs" className="hover:text-text transition-colors">Documentation</a>
             <a href="mailto:albericliu8@gmail.com" className="hover:text-text transition-colors">Contact</a>
           </div>
 

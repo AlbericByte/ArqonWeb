@@ -8,16 +8,16 @@ type Benchmark = {
 }
 
 const memBenchmarks: Benchmark[] = [
-  { label: 'Sequential Write', arqon: 5.39, rocksdb: 33.40, unit: 'ms' },
-  { label: 'Batch Write (100/batch)', arqon: 4.05, rocksdb: 4.57, unit: 'ms' },
-  { label: 'Sequential Read', arqon: 4.10, rocksdb: 9.62, unit: 'ms' },
-  { label: 'Random Read', arqon: 5.42, rocksdb: 9.24, unit: 'ms' },
+  { label: 'Sequential Write', arqon: 5.29, rocksdb: 33.99, unit: 'ms' },
+  { label: 'Batch Write (100/batch)', arqon: 3.69, rocksdb: 4.85, unit: 'ms' },
+  { label: 'Sequential Read', arqon: 4.20, rocksdb: 9.56, unit: 'ms' },
+  { label: 'Random Read', arqon: 5.40, rocksdb: 9.01, unit: 'ms' },
 ]
 
 const flushBenchmarks: Benchmark[] = [
-  { label: 'Sequential Write + Flush', arqon: 100.11, rocksdb: 483.00, unit: 'ms' },
-  { label: 'Batch Write + Flush', arqon: 133.46, rocksdb: 103.45, unit: 'ms' },
-  { label: 'Point Read After Flush', arqon: 115.07, rocksdb: 157.44, unit: 'ms' },
+  { label: 'Sequential Write + Flush', arqon: 105.40, rocksdb: 462.95, unit: 'ms' },
+  { label: 'Batch Write + Flush', arqon: 89.92, rocksdb: 88.44, unit: 'ms' },
+  { label: 'Point Read After Flush', arqon: 113.18, rocksdb: 151.99, unit: 'ms' },
 ]
 
 function getBadge(b: Benchmark) {

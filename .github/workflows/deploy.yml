@@ -27,8 +27,16 @@ jobs:
           node-version: 20
           cache: npm
 
+      # Build main site
       - run: npm ci
       - run: npm run build
+
+      # Build docs site
+      - run: cd docs-site && npm ci
+      - run: cd docs-site && npm run build
+
+      # Merge: copy docs build output into main site dist/docs/
+      - run: cp -r docs-site/build dist/docs
 
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
