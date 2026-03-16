@@ -39,7 +39,7 @@ export default function Hero() {
               causal reasoning graphs, temporal graphs with time-aware edges,
               agent state forking and branching, Raft distributed consensus,
               Redis RESP2 protocol compatibility, and reactive compare-and-swap state.
-              ArqonDB is up to 6.2x faster than RocksDB on writes and provides official SDKs
+              ArqonDB is up to 6.4x faster than RocksDB on writes and provides official SDKs
               for Python, Rust, Go, Java, and C++. Apache 2.0 licensed.
             </p>
           </div>

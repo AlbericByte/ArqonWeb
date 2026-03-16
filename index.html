@@ -6,7 +6,7 @@
 
     <!-- Primary Meta -->
     <title>ArqonDB - Agent Memory Database | Causal Graph + Temporal Graph + Vector Search + Distributed KV</title>
-    <meta name="description" content="ArqonDB is an open-source agent memory database built in Rust. Purpose-built for AI agents with causal reasoning graphs, temporal graphs, HNSW vector search, state branching, and distributed KV storage. Give your agents persistent, explainable, searchable memory. Up to 6.2x faster than RocksDB. Apache 2.0 licensed." />
+    <meta name="description" content="ArqonDB is an open-source agent memory database built in Rust. Purpose-built for AI agents with causal reasoning graphs, temporal graphs, HNSW vector search, state branching, and distributed KV storage. Give your agents persistent, explainable, searchable memory. Up to 6.4x faster than RocksDB. Apache 2.0 licensed." />
     <meta name="keywords" content="ArqonDB, agent memory database, agent state database, AI agent memory, LLM agent memory, causal graph database, temporal graph database, agent reasoning trace, vector database, HNSW vector search, distributed KV store, Rust database, Raft consensus, Redis compatible, agent state management, agent fork branch, agent state branching, explainable AI, reasoning DAG, embedding search, LSM-tree, compare and swap, open source database, AI infrastructure, agent observability, autonomous agent, agentic AI database" />
     <meta name="author" content="AlbericByte" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -24,7 +24,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://arqondb.io" />
     <meta property="og:title" content="ArqonDB - Agent Memory Database for AI Agents" />
-    <meta property="og:description" content="Purpose-built agent memory database with causal graph, temporal graph, vector search, state branching, and distributed KV. Give your agents persistent, explainable memory. Built in Rust, Up to 6.2x faster than RocksDB." />
+    <meta property="og:description" content="Purpose-built agent memory database with causal graph, temporal graph, vector search, state branching, and distributed KV. Give your agents persistent, explainable memory. Built in Rust, Up to 6.4x faster than RocksDB." />
     <meta property="og:site_name" content="ArqonDB" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:image" content="https://arqondb.io/og-image.png" />
@@ -146,7 +146,7 @@
           "name": "How fast is ArqonDB compared to RocksDB?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "In-memory benchmarks (10K pairs): ArqonDB is 6.2x faster than RocksDB on sequential writes (5.39ms vs 33.40ms), 2.3x faster on sequential reads (4.10ms vs 9.62ms), and 1.7x faster on random reads (5.42ms vs 9.24ms). Flush-to-SST benchmarks (100K pairs, 1KB values): ArqonDB is 4.8x faster on sequential write+flush (100.11ms vs 483.00ms) and 1.4x faster on point reads after flush. RocksDB edges ahead on batch write+flush (103.45ms vs 133.46ms). ArqonDB achieves this through write group batching and a unified Raft WAL design."
+            "text": "In-memory benchmarks (10K pairs): ArqonDB is 6.4x faster than RocksDB on sequential writes (5.29ms vs 33.99ms), 1.3x faster on batch writes (3.69ms vs 4.85ms), 2.3x faster on sequential reads (4.20ms vs 9.56ms), and 1.7x faster on random reads (5.40ms vs 9.01ms). Flush-to-SST benchmarks (100K pairs, 1KB values): ArqonDB is 4.4x faster on sequential write+flush (105.40ms vs 462.95ms), on par on batch write+flush (89.92ms vs 88.44ms), and 1.3x faster on point reads after flush (113.18ms vs 151.99ms). ArqonDB achieves this through write group batching and a unified Raft WAL design."
           }
         },
         {
@@ -277,16 +277,16 @@
       <h2>Performance vs RocksDB</h2>
       <h3>In-Memory (10K pairs, 20B keys, 100B values, WAL enabled)</h3>
       <ul>
-        <li>Sequential Write: ArqonDB 5.39ms vs RocksDB 33.40ms — 6.2x faster</li>
-        <li>Batch Write (100/batch): ArqonDB 4.05ms vs RocksDB 4.57ms — on par</li>
-        <li>Sequential Read: ArqonDB 4.10ms vs RocksDB 9.62ms — 2.3x faster</li>
-        <li>Random Read: ArqonDB 5.42ms vs RocksDB 9.24ms — 1.7x faster</li>
+        <li>Sequential Write: ArqonDB 5.29ms vs RocksDB 33.99ms — 6.4x faster</li>
+        <li>Batch Write (100/batch): ArqonDB 3.69ms vs RocksDB 4.85ms — 1.3x faster</li>
+        <li>Sequential Read: ArqonDB 4.20ms vs RocksDB 9.56ms — 2.3x faster</li>
+        <li>Random Read: ArqonDB 5.40ms vs RocksDB 9.01ms — 1.7x faster</li>
       </ul>
       <h3>Flush-to-SST (100K pairs, 20B keys, 1KB values, 4MB write buffer)</h3>
       <ul>
-        <li>Sequential Write + Flush: ArqonDB 100.11ms vs RocksDB 483.00ms — 4.8x faster</li>
-        <li>Batch Write + Flush: ArqonDB 133.46ms vs RocksDB 103.45ms — RocksDB 1.3x faster</li>
-        <li>Point Read After Flush: ArqonDB 115.07ms vs RocksDB 157.44ms — 1.4x faster</li>
+        <li>Sequential Write + Flush: ArqonDB 105.40ms vs RocksDB 462.95ms — 4.4x faster</li>
+        <li>Batch Write + Flush: ArqonDB 89.92ms vs RocksDB 88.44ms — on par</li>
+        <li>Point Read After Flush: ArqonDB 113.18ms vs RocksDB 151.99ms — 1.3x faster</li>
       </ul>
       <p>920+ tests, 64,000+ lines of Rust, 132+ PRs merged.</p>
 
