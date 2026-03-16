@@ -45,7 +45,8 @@ const config: Config = {
     image: 'img/og-image.png',
     colorMode: {
       defaultMode: 'light',
-      respectPrefersColorScheme: true,
+      disableSwitch: true,
+      respectPrefersColorScheme: false,
     },
     navbar: {
       title: 'ArqonDB',
