@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta -->
+    <title>ArqonDB - Agent Memory Database | Causal Graph + Temporal Graph + Vector Search + Distributed KV</title>
+    <meta name="description" content="ArqonDB is an open-source agent memory database built in Rust. Purpose-built for AI agents with causal reasoning graphs, temporal graphs, HNSW vector search, state branching, and distributed KV storage. Give your agents persistent, explainable, searchable memory. Up to 6.2x faster than RocksDB. Apache 2.0 licensed." />
+    <meta name="keywords" content="ArqonDB, agent memory database, agent state database, AI agent memory, LLM agent memory, causal graph database, temporal graph database, agent reasoning trace, vector database, HNSW vector search, distributed KV store, Rust database, Raft consensus, Redis compatible, agent state management, agent fork branch, agent state branching, explainable AI, reasoning DAG, embedding search, LSM-tree, compare and swap, open source database, AI infrastructure, agent observability, autonomous agent, agentic AI database" />
+    <meta name="author" content="AlbericByte" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://arqondb.io" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://arqondb.io" />
+    <meta property="og:title" content="ArqonDB - Agent Memory Database for AI Agents" />
+    <meta property="og:description" content="Purpose-built agent memory database with causal graph, temporal graph, vector search, state branching, and distributed KV. Give your agents persistent, explainable memory. Built in Rust, Up to 6.2x faster than RocksDB." />
+    <meta property="og:site_name" content="ArqonDB" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="https://arqondb.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ArqonDB - Agent Memory Database for AI Agents" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ArqonDB - Agent Memory Database for AI Agents" />
+    <meta name="twitter:description" content="Purpose-built agent memory database with causal graph, temporal graph, vector search, and state branching. Give your agents persistent, explainable memory. Built in Rust." />
+    <meta name="twitter:image" content="https://arqondb.io/og-image.png" />
+    <meta name="twitter:image:alt" content="ArqonDB - Agent Memory Database for AI Agents" />
+
+    <!-- JSON-LD: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "AlbericByte",
+      "url": "https://github.com/AlbericByte",
+      "logo": "https://arqondb.io/favicon.svg",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "albericliu8@gmail.com",
+        "contactType": "technical support"
+      },
+      "sameAs": [
+        "https://github.com/AlbericByte/ArqonDB"
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: WebSite with search -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ArqonDB",
+      "url": "https://arqondb.io",
+      "description": "Agent Memory Database for AI Agents - Causal Graph + Temporal Graph + Vector Search + Distributed KV + State Branching",
+      "publisher": {
+        "@type": "Organization",
+        "name": "AlbericByte"
+      }
+    }
+    </script>
+
+    <!-- JSON-LD: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ArqonDB",
+      "alternateName": ["Arqon DB", "ArqonDB Agent Memory Database", "ArqonDB Agent State Database"],
+      "applicationCategory": "DeveloperApplication",
+      "applicationSubCategory": "Agent Memory Database",
+      "operatingSystem": "Linux, macOS, Docker, Kubernetes",
+      "description": "An open-source agent memory database written in Rust. Purpose-built for AI agents with causal reasoning graphs (DAG-based reasoning traces), temporal graphs (time-aware edges with point-in-time traversal), HNSW vector similarity search, agent state forking/branching, and distributed key-value storage. Give your agents persistent, explainable, searchable memory.",
+      "url": "https://arqondb.io",
+      "downloadUrl": "https://github.com/AlbericByte/ArqonDB",
+      "installUrl": "https://github.com/AlbericByte/ArqonDB",
+      "softwareVersion": "latest",
+      "license": "https://opensource.org/licenses/Apache-2.0",
+      "isAccessibleForFree": true,
+      "programmingLanguage": ["Rust"],
+      "runtimePlatform": "Tokio async runtime",
+      "author": {
+        "@type": "Organization",
+        "name": "AlbericByte",
+        "url": "https://github.com/AlbericByte"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      },
+      "featureList": [
+        "AgentStateService - Core API for Agent Memory Management",
+        "Causal Reasoning Graph (DAG with Observe/Think/Act/Tool/Result steps and Triggers/Informs/Branches/Merges edges)",
+        "Temporal Graph with Time-Aware Edges, Point-in-Time Traversal, and Edge History",
+        "Agent State Fork and Branch with Copy-on-Write Overlays",
+        "Compare-and-Swap Reactive State with Watch Notifications",
+        "HNSW Vector Similarity Search (L2, Cosine, Inner Product) with find_similar_chains",
+        "Product Quantization (PQ) and Scalar Quantization (SQ)",
+        "Distributed Key-Value Store with gRPC API",
+        "LSM-Tree Storage Engine with MVCC",
+        "Raft Distributed Consensus (separate metadata and data planes)",
+        "Redis RESP2 Protocol Compatible",
+        "Multi-Language SDKs (Python, Rust, Go, Java, C++)",
+        "Web Management Console with Cluster Visualization",
+        "Write Group Batching and Unified Raft WAL",
+        "Leveled Compaction with K-way Merge",
+        "Bloom Filters and Sharded LRU Block Cache"
+      ],
+      "softwareRequirements": "Rust 1.70+",
+      "storageRequirements": "Varies by dataset",
+      "releaseNotes": "920+ tests, 64K+ lines of Rust, 132+ PRs merged"
+    }
+    </script>
+
+    <!-- JSON-LD: FAQ for rich snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is ArqonDB?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ArqonDB is an open-source agent memory database written in Rust, purpose-built for AI agents and LLM applications. It provides persistent, explainable, searchable memory through causal reasoning graphs, temporal graphs, HNSW vector search, and agent state branching — all unified on top of a distributed key-value store. It is Apache 2.0 licensed and supports Python, Rust, Go, Java, and C++ SDKs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How fast is ArqonDB compared to RocksDB?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In-memory benchmarks (10K pairs): ArqonDB is 6.2x faster than RocksDB on sequential writes (5.39ms vs 33.40ms), 2.3x faster on sequential reads (4.10ms vs 9.62ms), and 1.7x faster on random reads (5.42ms vs 9.24ms). Flush-to-SST benchmarks (100K pairs, 1KB values): ArqonDB is 4.8x faster on sequential write+flush (100.11ms vs 483.00ms) and 1.4x faster on point reads after flush. RocksDB edges ahead on batch write+flush (103.45ms vs 133.46ms). ArqonDB achieves this through write group batching and a unified Raft WAL design."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a Causal Graph in ArqonDB?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Causal Graph in ArqonDB records AI agent reasoning as a directed acyclic graph (DAG). Each node is a step with one of five types: Observe, Think, Act, Tool, or Result. Edges between steps are semantically typed as Triggers, Informs, Branches, or Merges. The graph supports full BFS traversal in forward, backward, or both directions for complete explainability and audit trails."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a Temporal Graph in ArqonDB?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Temporal Graph in ArqonDB extends causal edges with validity intervals [valid_from, valid_to]. You can query the graph at any point in time using traverse_at(), traverse only edges active within a time window using traverse_in_window(), expire edges without deletion using expire_edge(), and retrieve the full version history of any edge using edge_history(). This enables time-aware reasoning and historical analysis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What languages and protocols does ArqonDB support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ArqonDB provides official gRPC SDKs for Python (3.9+), Rust (1.70+), Go (1.21+), Java (17+), and C++ (17+). It also natively supports the Redis RESP2 protocol, so any existing Redis client (redis-cli, Python redis, Node.js ioredis, etc.) can connect directly to ArqonDB on port 6379."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does ArqonDB handle agent state branching?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ArqonDB provides lightweight fork/merge primitives with copy-on-write overlays. Agents can fork a branch from any point in their reasoning timeline to explore alternative strategies without duplicating data. Branch reads walk the parent chain transparently. Winning branches can be atomically merged back to the main timeline, while losing branches can be discarded."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What vector search capabilities does ArqonDB have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ArqonDB includes built-in HNSW (Hierarchical Navigable Small World) vector index supporting L2, cosine, and inner-product distance metrics. It also supports Product Quantization (PQ) and Scalar Quantization (SQ8) for memory-efficient large-scale search, IVF-PQ and IVF-SQ variants, and distributed fan-out search across cluster nodes with k-way merge for global top-k results."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is ArqonDB deployed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ArqonDB can be deployed in multiple ways: single-node for development (cargo run), Docker containers with multi-stage builds, Kubernetes with StatefulSets for production clusters (3+ data nodes), or macOS launchd for background services. The three-tier architecture consists of a stateless Gateway, a Metadata Raft group, and sharded Data Nodes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the AgentStateService in ArqonDB?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The AgentStateService is ArqonDB's core API for agent memory management. It provides causal graph operations (add_step, add_edge, traverse), temporal edge queries (traverse_at, edge_history), state branching (fork, merge_branch), reactive watches (cas_put, watch_prefix), and vector similarity search (find_similar_chains). A production demo (Arqon) uses AgentStateService to power an end-to-end quantitative trading agent with full causal traceability across market data ingestion, AI signal generation, and trade execution."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is ArqonDB open source?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, ArqonDB is fully open source under the Apache 2.0 license. The source code is available on GitHub at github.com/AlbericByte/ArqonDB. The project has 920+ tests, 64,000+ lines of Rust code, and 132+ pull requests merged."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: HowTo for getting started -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Get Started with ArqonDB",
+      "description": "Deploy ArqonDB as a single node for development or as a distributed cluster for production.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Build from source",
+          "text": "Clone the repository and build with Rust: cargo build --features data-node"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Start a single node",
+          "text": "Run the data node: cargo run --bin raft_engine -- /tmp/arqondb 0.0.0.0:7379"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Connect with a client",
+          "text": "Use the Python SDK (pip install arqondb) or connect via redis-cli on port 6379"
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+
+    <!-- SEO: Static content for crawlers that don't execute JavaScript -->
+    <noscript>
+      <h1>ArqonDB - Agent Memory Database for AI Agents</h1>
+      <p>ArqonDB is an open-source agent memory database written in Rust. Give your AI agents persistent, explainable, searchable memory with causal graphs, temporal graphs, vector search, state branching, and distributed KV storage.</p>
+
+      <h2>Agent Memory Features</h2>
+      <ul>
+        <li><strong>Distributed Key-Value Store</strong> - Sharded KV with gRPC API. Put, Get, Delete, Scan, BatchWrite across a distributed cluster.</li>
+        <li><strong>LSM-Tree Storage Engine</strong> - Concurrent skip-list MemTable, prefix-compressed SST files, bloom filters, sharded LRU block cache, leveled compaction.</li>
+        <li><strong>HNSW Vector Similarity Search</strong> - Built-in HNSW index with L2, cosine, and inner-product distance. Product Quantization (PQ) and Scalar Quantization (SQ) for large-scale.</li>
+        <li><strong>Causal Reasoning Graph</strong> - DAG-based agent reasoning trace. Step types: Observe, Think, Act, Tool, Result. Edge types: Triggers, Informs, Branches, Merges. Full BFS traversal.</li>
+        <li><strong>Temporal Graph</strong> - Time-aware edges with validity intervals [valid_from, valid_to]. Point-in-time traversal, range queries, edge expiration, and version history.</li>
+        <li><strong>Agent State Fork &amp; Branch</strong> - Lightweight branching with copy-on-write overlays. Explore alternate reasoning paths. Atomic merge back.</li>
+        <li><strong>Raft Distributed Consensus</strong> - Single-threaded event loop. Separate metadata and data plane Raft groups.</li>
+        <li><strong>Redis Protocol Compatible</strong> - RESP2-compatible TCP server. Any Redis client can connect directly.</li>
+        <li><strong>Reactive State</strong> - Compare-and-swap with optimistic locking. Watch key prefixes for real-time gRPC notifications.</li>
+        <li><strong>Multi-Language SDKs</strong> - Official gRPC clients for Python 3.9+, Rust 1.70+, Go 1.21+, Java 17+, and C++ 17+.</li>
+        <li><strong>Management Web Console</strong> - Dashboard with cluster stats, shard topology, KV terminal, user management, Prometheus metrics.</li>
+      </ul>
+
+      <h2>Architecture</h2>
+      <p>Three-tier distributed architecture: stateless Gateway (gRPC :9379, HTTP :9380, Redis :6379) routing to a Metadata Plane (Raft consensus for shard map, column families, node registry) and Data Plane (ShardEngine per node with LSM-tree, HNSW vector index, agent state column families, per-shard Raft). Storage engine components: WAL with CRC32 checksums, MemTable with skip-list MVCC, SST files with bloom filters and compression (Zstd, Snappy, LZ4), sharded LRU block cache, leveled k-way merge compaction.</p>
+
+      <h2>Performance vs RocksDB</h2>
+      <h3>In-Memory (10K pairs, 20B keys, 100B values, WAL enabled)</h3>
+      <ul>
+        <li>Sequential Write: ArqonDB 5.39ms vs RocksDB 33.40ms — 6.2x faster</li>
+        <li>Batch Write (100/batch): ArqonDB 4.05ms vs RocksDB 4.57ms — on par</li>
+        <li>Sequential Read: ArqonDB 4.10ms vs RocksDB 9.62ms — 2.3x faster</li>
+        <li>Random Read: ArqonDB 5.42ms vs RocksDB 9.24ms — 1.7x faster</li>
+      </ul>
+      <h3>Flush-to-SST (100K pairs, 20B keys, 1KB values, 4MB write buffer)</h3>
+      <ul>
+        <li>Sequential Write + Flush: ArqonDB 100.11ms vs RocksDB 483.00ms — 4.8x faster</li>
+        <li>Batch Write + Flush: ArqonDB 133.46ms vs RocksDB 103.45ms — RocksDB 1.3x faster</li>
+        <li>Point Read After Flush: ArqonDB 115.07ms vs RocksDB 157.44ms — 1.4x faster</li>
+      </ul>
+      <p>920+ tests, 64,000+ lines of Rust, 132+ PRs merged.</p>
+
+      <h2>AgentStateService - Core Agent Memory API</h2>
+      <p>The AgentStateService provides purpose-built primitives for AI agent memory: Causal Graph records reasoning traces as DAGs with Observe/Think/Act/Tool/Result steps and Triggers/Informs/Branches/Merges edges. Temporal Graph adds time-aware edges with validity intervals, point-in-time traversal (traverse_at), range queries (traverse_in_window), edge expiration, and version history (edge_history). Fork &amp; Branch enables lightweight state branching with copy-on-write overlays for exploring alternate reasoning paths. Reactive State provides CAS writes and prefix watch notifications. Similarity Search uses find_similar_chains for KNN on reasoning step embeddings to let agents learn from past experience.</p>
+
+      <h2>Demo: Quantitative Trading Agent powered by AgentStateService</h2>
+      <p>A production demo (Arqon) showcases ArqonDB's agent memory capabilities in a quantitative trading pipeline. The AgentStateService records the full agent lifecycle: (1) Observe steps for market data ingestion across 6,800+ NASDAQ symbols and news sentiment analysis; (2) Think steps for AI signal generation using 200+ technical indicators and 10,000+ alpha factors; (3) Similarity search on 64-dimensional pattern vectors to find historically similar market conditions; (4) Act steps for trade execution planning; (5) Result steps for portfolio tracking; (6) Fork branches for exploring alternative trading strategies. The causal graph provides complete audit trails and explainability.</p>
+
+      <h2>SDKs &amp; Protocols</h2>
+      <p>Official gRPC clients: Python 3.9+, Rust 1.70+, Go 1.21+, Java 17+, C++ 17+. Redis RESP2 protocol compatible — connect with redis-cli or any Redis client library.</p>
+
+      <h2>Deployment</h2>
+      <p>Single Node (cargo run), Docker (multi-stage build), Kubernetes (StatefulSet with 3+ data nodes), macOS launchd.</p>
+
+      <p>Open source, Apache 2.0 licensed. <a href="https://github.com/AlbericByte/ArqonDB">View on GitHub</a>.</p>
+    </noscript>
+  </body>
+</html>
