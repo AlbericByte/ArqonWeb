@@ -8,6 +8,7 @@ const links = [
   { href: '#agent', label: 'Agent Memory' },
   { href: '#use-case', label: 'Use Case' },
   { href: '#sdks', label: 'SDKs' },
+  { href: '/docs/', label: 'Docs' },
 ]
 
 export default function Navbar() {
