@@ -9,202 +9,173 @@ Official Python client for ArqonDB. Requires Python 3.9+.
 
 ## Installation
 
+Install directly via pip — no extra build tools or protobuf compilation needed:
+
 ```bash
 pip install arqondb
 ```
 
+The package includes the gRPC client and all dependencies out of the box.
+
 ## Quick Start
 
 ```python
-from arqondb import Client
+from arqondb import ArqonDBClient
 
 # Connect
-db = Client("localhost:9379")
+client = ArqonDBClient("127.0.0.1:7379")
 
 # Basic KV
-db.put("key", b"value")
-value = db.get("key")
+client.put(b"key", b"value")
+value = client.get(b"key")
 
-# Agent memory
-step = db.add_step(
-    agent_id="agent-1",
-    step_type="Think",
-    content="Analyzing data..."
-)
+# Agent memory (high-level API)
+from arqondb import AgentMemory
+
+memory = AgentMemory("127.0.0.1:9379", agent_id="agent-1")
+obs_id = memory.observe("Analyzing data...")
+results = memory.recall("data analysis", k=5)
 ```
 
 ## Connection
 
 ```python
-from arqondb import Client
+from arqondb import ArqonDBClient
 
 # Single node
-db = Client("localhost:9379")
+client = ArqonDBClient("127.0.0.1:7379")
 
-# Cluster (multiple gateways)
-db = Client(["10.0.0.1:9379", "10.0.0.2:9379", "10.0.0.3:9379"])
+# With column family
+client = ArqonDBClient("127.0.0.1:7379", cf=1)
 
-# With options
-db = Client(
-    "localhost:9379",
-    timeout=5.0,           # Request timeout in seconds
-    max_retries=3,         # Retry on transient failures
-)
+# Context manager
+with ArqonDBClient("127.0.0.1:7379") as client:
+    client.put(b"key", b"value")
 ```
 
 ## Key-Value Operations
 
 ```python
 # Put / Get / Delete
-db.put("user:1", b'{"name": "Alice"}')
-value = db.get("user:1")      # bytes or None
-db.delete("user:1")
+client.put(b"user:1", b'{"name": "Alice"}')
+value = client.get(b"user:1")      # bytes or None
+client.delete(b"user:1")
+
+# Merge
+client.merge(b"counter", b"1")
 
 # Batch write
-db.batch_write([
-    ("key1", b"value1"),
-    ("key2", b"value2"),
-    ("key3", b"value3"),
+client.batch_write([
+    {"op": "put", "key": b"key1", "value": b"value1"},
+    {"op": "put", "key": b"key2", "value": b"value2"},
+    {"op": "delete", "key": b"key3"},
 ])
 
-# Scan
-results = db.scan(start="user:", end="user:~", limit=100)
-results = db.scan_prefix("user:", limit=100)
+# Scan by prefix
+entries, next_cursor = client.scan(b"user:", limit=100)
 
-# TTL
-db.put("session:abc", b"data", ttl=3600)
+# Delete by prefix
+deleted = client.delete_by_prefix(b"temp:")
 ```
 
-## Causal Graph
+## Vector Operations
 
 ```python
-# Add steps
-observe = db.add_step(
+from arqondb import VectorIndexConfig
+
+# Create index
+client.create_vector_index("embeddings", VectorIndexConfig(
+    dim=384,
+    metric="cosine",       # "l2", "cosine", or "inner_product"
+    m=16,
+    ef_construction=200,
+    ef_search=64,
+))
+
+# Insert vectors
+client.vector_put("embeddings", vector_id=1, vector=[0.1, 0.2, 0.3, ...])
+
+# Search
+results = client.vector_search("embeddings", query=[0.1, 0.2, 0.3, ...], k=10)
+for r in results:
+    print(f"ID: {r.id}, Distance: {r.distance}")
+
+# Get / Delete
+vec = client.vector_get("embeddings", vector_id=1)
+client.vector_delete("embeddings", vector_id=1)
+
+# Drop index
+client.drop_vector_index("embeddings")
+```
+
+## Graph Operations
+
+```python
+# Create graph index (with optional HNSW for vector search on nodes)
+client.create_graph_index("knowledge", dim=384, metric="cosine")
+
+# Add nodes
+client.graph_add_node("knowledge", node_id=1, properties=b'{"type": "observation"}')
+client.graph_add_node("knowledge", node_id=2, properties=b'{"type": "action"}',
+                      vector=[0.1, 0.2, 0.3, ...])
+
+# Add temporal edges
+import time
+now = int(time.time())
+client.graph_add_edge(
+    "knowledge", src=1, dst=2, edge_type="caused",
+    valid_from=now, valid_to=now + 3600,
+    properties=b'{"weight": 0.9}',
+)
+
+# Vector search on graph nodes
+results = client.graph_search("knowledge", query=[0.1, 0.2, 0.3, ...], k=5)
+for r in results:
+    print(f"Node: {r.node_id}, Distance: {r.distance}")
+
+# Query edges from a node
+edges = client.graph_query_edges("knowledge", node_id=1, edge_type="caused")
+for e in edges:
+    print(f"{e.src} -> {e.dst} [{e.edge_type}]")
+
+# Reverse traversal (incoming edges)
+incoming = client.graph_query_edges("knowledge", node_id=2, reverse=True)
+```
+
+## Agent Memory (High-Level API)
+
+The `AgentMemory` class provides a simplified interface for agent memory use cases, combining KV, vector, and graph operations.
+
+```python
+from arqondb import AgentMemory
+
+# Without embeddings (KV-only fallback)
+memory = AgentMemory("127.0.0.1:9379", agent_id="agent-1")
+
+# With embeddings (enables vector search)
+memory = AgentMemory(
+    "127.0.0.1:9379",
     agent_id="agent-1",
-    step_type="Observe",
-    content="Market data received"
+    embed_fn=my_embed_function,  # (text) -> List[float]
+    dim=384,
 )
 
-think = db.add_step(
-    agent_id="agent-1",
-    step_type="Think",
-    content="Bullish pattern detected",
-    embedding=[0.1, 0.2, 0.3, ...]  # Optional
-)
+# Store observations
+obs1 = memory.observe("User prefers dark mode", metadata={"source": "settings"})
+obs2 = memory.observe("User is located in SF", metadata={"source": "profile"})
 
-# Add edges
-db.add_edge(src=observe, dst=think, edge_type="Triggers")
+# Link observations causally
+memory.link(obs1, obs2, relation="context")
 
-# Traverse
-chain = db.traverse(start=observe, direction="Forward", max_depth=10)
-for step in chain:
-    print(f"[{step.step_type}] {step.content}")
-```
+# Recall similar memories
+results = memory.recall("what does the user prefer?", k=5)
+for entry in results:
+    print(f"[{entry.id}] {entry.text} (distance: {entry.distance})")
 
-## Temporal Graph
+# Traverse causal edges
+edges = memory.get_edges(obs1)
 
-```python
-from datetime import datetime, timedelta
-
-now = datetime.now()
-
-# Temporal edge
-db.add_temporal_edge(
-    src=step_1,
-    dst=step_2,
-    edge_type="Informs",
-    valid_from=now,
-    valid_to=now + timedelta(hours=1)
-)
-
-# Point-in-time traversal
-steps = db.traverse_at(
-    start=step_1,
-    ts=now + timedelta(minutes=30),
-    direction="Forward",
-    max_depth=5
-)
-
-# Edge history
-history = db.edge_history(src=step_1, dst=step_2, edge_type="Informs")
-```
-
-## State Branching
-
-```python
-# Fork
-branch = db.fork(parent_id="main", snapshot_from=step_1)
-
-# Write on branch
-db.branch_put(branch, "strategy", b"conservative")
-db.add_step(
-    agent_id="agent-1",
-    step_type="Think",
-    branch_id=branch,
-    content="Testing conservative approach"
-)
-
-# Read (walks parent chain)
-value = db.branch_get(branch, "strategy")
-
-# Merge or discard
-db.merge_branch(branch)
-# db.discard_branch(branch)
-```
-
-## Vector Search
-
-```python
-# Find similar reasoning chains
-chains = db.find_similar_chains(
-    embedding=[0.1, 0.2, 0.3, ...],
-    k=5,
-    max_depth=10
-)
-
-for chain in chains:
-    print(f"Score: {chain.score}")
-    for step in chain.steps:
-        print(f"  [{step.step_type}] {step.content}")
-
-# Basic KNN
-results = db.vector_search(
-    embedding=[0.1, 0.2, 0.3, ...],
-    k=10,
-    metric="cosine"
-)
-```
-
-## Reactive State
-
-```python
-# Compare-and-swap
-value, seq = db.get_with_seq("state")
-success = db.cas_put("state", b"new_value", expected_seq=seq)
-
-# Watch
-stream = db.watch_prefix("agent-1:")
-for event in stream:
-    print(f"{event.key} changed to {event.value}")
-```
-
-## Async Support
-
-```python
-import asyncio
-from arqondb import AsyncClient
-
-async def main():
-    db = AsyncClient("localhost:9379")
-
-    await db.put("key", b"value")
-    value = await db.get("key")
-
-    step = await db.add_step(
-        agent_id="agent-1",
-        step_type="Think",
-        content="Analyzing..."
-    )
-
-asyncio.run(main())
+# Context manager
+with AgentMemory("127.0.0.1:9379", agent_id="agent-1") as memory:
+    memory.observe("hello world")
 ```
