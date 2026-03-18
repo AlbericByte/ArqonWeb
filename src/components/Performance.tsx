@@ -165,9 +165,12 @@ export default function Performance() {
             transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <div className="flex items-center gap-3 mb-4">
-              <h3 className="text-sm font-semibold text-text">Temporal Graph</h3>
-              <span className="text-[10px] text-text-light font-mono px-2 py-0.5 rounded-full bg-surface-light">vs Neo4j · 10K nodes, 50K temporal edges · embedded est.</span>
+              <h3 className="text-sm font-semibold text-text">Temporal Graph · 10–5000× via Embedded Design</h3>
+              <span className="text-[10px] text-text-light font-mono px-2 py-0.5 rounded-full bg-surface-light">vs Neo4j · 10K nodes, 50K temporal edges</span>
             </div>
+            <p className="text-xs text-text-light mb-4 -mt-2 leading-relaxed">
+              Embedded engine vs client-server request — conservatively estimated at /10 overhead. The advantage comes from architectural design, not optimization.
+            </p>
             <div className="space-y-3">
               {graphBenchmarks.map((b) => <BenchmarkBar key={b.label} b={b} competitorName="Neo4j" />)}
             </div>
