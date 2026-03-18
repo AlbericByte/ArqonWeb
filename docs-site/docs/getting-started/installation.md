@@ -5,25 +5,49 @@ title: Installation
 
 # Installation
 
-ArqonDB is written in Rust. You can build from source, run with Docker, or deploy on Kubernetes.
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-## Prerequisites
+## Python (recommended)
 
-- **Rust** 1.70+ (for building from source)
-- **Docker** (optional, for containerized deployment)
+Install the Python SDK directly via pip — no build tools, no protobuf compilation required:
 
-## Build from Source
+```bash
+pip install arqondb
+```
+
+That's it. The package includes the gRPC client and all dependencies. You're ready to connect:
+
+```python
+from arqondb import ArqonDBClient
+
+client = ArqonDBClient("127.0.0.1:7379")
+client.put(b"hello", b"world")
+print(client.get(b"hello"))  # b"world"
+```
+
+> **Requires Python 3.9+.** See the [Python SDK](/sdks/python) page for the full API.
+
+---
+
+## Server Installation
+
+To run ArqonDB itself, you can build from source or use Docker.
+
+### Build from Source
+
+**Prerequisites:** Rust 1.85+ (`rustup update stable`). `protoc` is **not required** — a prebuilt binary is bundled.
 
 ```bash
 # Clone the repository
 git clone https://github.com/AlbericByte/ArqonDB.git
 cd ArqonDB
 
-# Build the data node
+# Build all binaries (metadata, data node, gateway)
 cargo build --release --features data-node
 ```
 
-## Docker
+### Docker
 
 ```bash
 # Pull and run
@@ -31,20 +55,12 @@ docker pull arqondb/arqondb:latest
 docker run -d -p 9379:9379 -p 6379:6379 arqondb/arqondb:latest
 ```
 
-## Install Client SDKs
+---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+## Other Client SDKs
 
 <Tabs>
-  <TabItem value="python" label="Python" default>
-
-```bash
-pip install arqondb
-```
-
-  </TabItem>
-  <TabItem value="rust" label="Rust">
+  <TabItem value="rust" label="Rust" default>
 
 ```bash
 cargo add arqondb
@@ -80,10 +96,18 @@ vcpkg install arqondb
 ## Verify Installation
 
 ```bash
-# Start a single node
-cargo run --bin raft_engine -- /tmp/arqondb 0.0.0.0:7379
+# Start a single data node
+cargo run --features data-node --bin raft_engine -- /tmp/arqondb 0.0.0.0:7379
 
-# Test with redis-cli
+# Test with Python SDK
+python3 -c "
+from arqondb import ArqonDBClient
+client = ArqonDBClient('127.0.0.1:7379')
+print(client.ping())  # PONG
+client.close()
+"
+
+# Or test with redis-cli
 redis-cli -p 6379 PING
 # → PONG
 
