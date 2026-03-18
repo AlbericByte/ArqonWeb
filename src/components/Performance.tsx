@@ -3,40 +3,66 @@ import { motion } from 'framer-motion'
 type Benchmark = {
   label: string
   arqon: number
-  rocksdb: number
+  competitor: number
   unit: string
 }
 
 const memBenchmarks: Benchmark[] = [
-  { label: 'Sequential Write', arqon: 5.29, rocksdb: 33.99, unit: 'ms' },
-  { label: 'Batch Write (100/batch)', arqon: 3.69, rocksdb: 4.85, unit: 'ms' },
-  { label: 'Sequential Read', arqon: 4.20, rocksdb: 9.56, unit: 'ms' },
-  { label: 'Random Read', arqon: 5.40, rocksdb: 9.01, unit: 'ms' },
+  { label: 'Sequential Write', arqon: 5.29, competitor: 33.99, unit: 'ms' },
+  { label: 'Batch Write (100/batch)', arqon: 3.69, competitor: 4.85, unit: 'ms' },
+  { label: 'Sequential Read', arqon: 4.20, competitor: 9.56, unit: 'ms' },
+  { label: 'Random Read', arqon: 5.40, competitor: 9.01, unit: 'ms' },
 ]
 
 const flushBenchmarks: Benchmark[] = [
-  { label: 'Sequential Write + Flush', arqon: 105.40, rocksdb: 462.95, unit: 'ms' },
-  { label: 'Batch Write + Flush', arqon: 89.92, rocksdb: 88.44, unit: 'ms' },
-  { label: 'Point Read After Flush', arqon: 113.18, rocksdb: 151.99, unit: 'ms' },
+  { label: 'Sequential Write + Flush', arqon: 105.40, competitor: 462.95, unit: 'ms' },
+  { label: 'Batch Write + Flush', arqon: 89.92, competitor: 88.44, unit: 'ms' },
+  { label: 'Point Read After Flush', arqon: 113.18, competitor: 151.99, unit: 'ms' },
+]
+
+const graphBenchmarks: Benchmark[] = [
+  { label: 'Edge Ingestion (50K edges)', arqon: 1.1, competitor: 50, unit: 'µs/edge' },
+  { label: 'Temporal Range Query', arqon: 0.3, competitor: 1700, unit: 'µs/query' },
+  { label: 'Multi-hop BFS (depth=3)', arqon: 13.8, competitor: 320, unit: 'µs/traversal' },
+  { label: 'Point-in-Time Query', arqon: 0.6, competitor: 1500, unit: 'µs/query' },
 ]
 
 function getBadge(b: Benchmark) {
-  const ratio = b.rocksdb / b.arqon
+  const ratio = b.competitor / b.arqon
   if (ratio >= 1.3) {
-    return { text: `${ratio.toFixed(1)}x faster`, cls: 'bg-accent/10 text-accent-dark' }
+    const formatted = ratio >= 100 ? `${Math.round(ratio).toLocaleString()}x faster` : `${ratio.toFixed(1)}x faster`
+    return { text: formatted, cls: 'bg-accent/10 text-accent-dark' }
   }
   if (ratio >= 0.95) {
     return { text: 'on par', cls: 'bg-primary/10 text-primary' }
   }
-  const inv = (b.arqon / b.rocksdb).toFixed(1)
+  const inv = (b.arqon / b.competitor).toFixed(1)
   return { text: `${inv}x slower`, cls: 'bg-surface-lighter text-text-light' }
 }
 
-function BenchmarkBar({ b }: { b: Benchmark }) {
-  const maxVal = Math.max(b.arqon, b.rocksdb)
+function formatValue(val: number, unit: string) {
+  if (val >= 1000) return `${val.toLocaleString()} ${unit}`
+  return `${val} ${unit}`
+}
+
+function BenchmarkBar({ b, competitorName }: { b: Benchmark; competitorName: string }) {
+  const maxVal = Math.max(b.arqon, b.competitor)
   const arqonWidth = (b.arqon / maxVal) * 100
-  const rocksWidth = (b.rocksdb / maxVal) * 100
+  const competitorWidth = (b.competitor / maxVal) * 100
   const badge = getBadge(b)
+
+  // For extreme ratios, use log scale so ArqonDB bar is still visible
+  const ratio = maxVal / Math.min(b.arqon, b.competitor)
+  const useLogScale = ratio > 20
+  let arqonBarWidth = arqonWidth
+  let competitorBarWidth = competitorWidth
+  if (useLogScale) {
+    const logMax = Math.log10(maxVal)
+    const logMin = Math.log10(Math.min(b.arqon, b.competitor))
+    const logRange = logMax - logMin
+    arqonBarWidth = ((Math.log10(b.arqon) - logMin) / logRange) * 85 + 15
+    competitorBarWidth = ((Math.log10(b.competitor) - logMin) / logRange) * 85 + 15
+  }
 
   return (
     <div className="rounded-2xl bg-white p-5 border border-border-light">
@@ -52,29 +78,29 @@ function BenchmarkBar({ b }: { b: Benchmark }) {
           <div className="flex-1 h-7 bg-surface-light rounded-lg overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
-              whileInView={{ width: `${arqonWidth}%` }}
+              whileInView={{ width: `${arqonBarWidth}%` }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
               className="h-full bg-gradient-to-r from-primary to-primary-light rounded-lg flex items-center justify-end px-2.5"
             >
               <span className="text-[10px] font-mono text-white whitespace-nowrap font-medium">
-                {b.arqon} {b.unit}
+                {formatValue(b.arqon, b.unit)}
               </span>
             </motion.div>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-xs text-text-light font-mono w-16 shrink-0 text-right">RocksDB</span>
+          <span className="text-xs text-text-light font-mono w-16 shrink-0 text-right">{competitorName}</span>
           <div className="flex-1 h-7 bg-surface-light rounded-lg overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
-              whileInView={{ width: `${rocksWidth}%` }}
+              whileInView={{ width: `${competitorBarWidth}%` }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.1 }}
               className="h-full bg-surface-lighter rounded-lg flex items-center justify-end px-2.5"
             >
               <span className="text-[10px] font-mono text-text-light whitespace-nowrap">
-                {b.rocksdb} {b.unit}
+                {formatValue(b.competitor, b.unit)}
               </span>
             </motion.div>
           </div>
@@ -86,7 +112,7 @@ function BenchmarkBar({ b }: { b: Benchmark }) {
 
 export default function Performance() {
   return (
-    <section id="performance" aria-label="ArqonDB Performance Benchmarks vs RocksDB" className="py-24 md:py-32 bg-surface">
+    <section id="performance" aria-label="ArqonDB Performance Benchmarks" className="py-24 md:py-32 bg-surface">
       <div className="max-w-[980px] mx-auto px-6">
         <div className="text-center mb-20">
           <p className="text-primary text-sm font-semibold tracking-wide uppercase mb-3">Performance</p>
@@ -99,7 +125,7 @@ export default function Performance() {
         </div>
 
         <div className="max-w-[640px] mx-auto space-y-10">
-          {/* In-Memory Benchmarks */}
+          {/* KV: In-Memory Benchmarks */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -107,15 +133,15 @@ export default function Performance() {
             transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <div className="flex items-center gap-3 mb-4">
-              <h3 className="text-sm font-semibold text-text">In-Memory</h3>
-              <span className="text-[10px] text-text-light font-mono px-2 py-0.5 rounded-full bg-surface-light">10K pairs, 20B keys, 100B values</span>
+              <h3 className="text-sm font-semibold text-text">KV In-Memory</h3>
+              <span className="text-[10px] text-text-light font-mono px-2 py-0.5 rounded-full bg-surface-light">vs RocksDB · 10K pairs, 20B keys, 100B values</span>
             </div>
             <div className="space-y-3">
-              {memBenchmarks.map((b) => <BenchmarkBar key={b.label} b={b} />)}
+              {memBenchmarks.map((b) => <BenchmarkBar key={b.label} b={b} competitorName="RocksDB" />)}
             </div>
           </motion.div>
 
-          {/* Flush-to-SST Benchmarks */}
+          {/* KV: Flush-to-SST Benchmarks */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -123,11 +149,27 @@ export default function Performance() {
             transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <div className="flex items-center gap-3 mb-4">
-              <h3 className="text-sm font-semibold text-text">Flush-to-SST</h3>
-              <span className="text-[10px] text-text-light font-mono px-2 py-0.5 rounded-full bg-surface-light">100K pairs, 20B keys, 1KB values</span>
+              <h3 className="text-sm font-semibold text-text">KV Flush-to-SST</h3>
+              <span className="text-[10px] text-text-light font-mono px-2 py-0.5 rounded-full bg-surface-light">vs RocksDB · 100K pairs, 20B keys, 1KB values</span>
             </div>
             <div className="space-y-3">
-              {flushBenchmarks.map((b) => <BenchmarkBar key={b.label} b={b} />)}
+              {flushBenchmarks.map((b) => <BenchmarkBar key={b.label} b={b} competitorName="RocksDB" />)}
+            </div>
+          </motion.div>
+
+          {/* Temporal Graph Benchmarks */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <h3 className="text-sm font-semibold text-text">Temporal Graph</h3>
+              <span className="text-[10px] text-text-light font-mono px-2 py-0.5 rounded-full bg-surface-light">vs Neo4j · 10K nodes, 50K temporal edges · embedded est.</span>
+            </div>
+            <div className="space-y-3">
+              {graphBenchmarks.map((b) => <BenchmarkBar key={b.label} b={b} competitorName="Neo4j" />)}
             </div>
           </motion.div>
         </div>
