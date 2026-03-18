@@ -169,7 +169,7 @@ export default function Performance() {
               <span className="text-[10px] text-text-light font-mono px-2 py-0.5 rounded-full bg-surface-light">vs Neo4j · 10K nodes, 50K temporal edges</span>
             </div>
             <p className="text-xs text-text-light mb-4 -mt-2 leading-relaxed">
-              Embedded engine vs client-server request — the advantage comes from architectural design, not optimization.
+              Embedded engine vs client-server request — conservatively estimated at /10 overhead. The advantage comes from architectural design, not optimization.
             </p>
             <div className="space-y-3">
               {graphBenchmarks.map((b) => <BenchmarkBar key={b.label} b={b} competitorName="Neo4j" />)}
