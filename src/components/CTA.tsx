@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Star, Heart } from 'lucide-react'
 
 export default function CTA() {
   return (
@@ -14,17 +14,39 @@ export default function CTA() {
         <p className="text-text-muted text-lg max-w-[440px] mx-auto mb-10 leading-relaxed">
           Open source. Apache 2.0 licensed. Schedule for production.
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="https://github.com/AlbericByte/ArqonDB" target="_blank" rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 px-7 py-3 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-medium transition-all">
-            View on GitHub
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </a>
-          <a href="/docs"
-            className="inline-flex items-center gap-1 text-primary text-sm font-medium hover:underline">
-            Read the Docs
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="https://github.com/AlbericByte/ArqonDB" target="_blank" rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 px-7 py-3 rounded-full bg-primary hover:bg-primary-dark text-white text-sm font-medium transition-all">
+              View on GitHub
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </a>
+            <a href="/docs"
+              className="inline-flex items-center gap-1 text-primary text-sm font-medium hover:underline">
+              Read the Docs
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+          <div className="flex items-center justify-center gap-3">
+            <a
+              href="https://github.com/AlbericByte/ArqonDB"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border-light text-sm font-medium text-text hover:border-warning/50 hover:text-warning transition-colors"
+            >
+              <Star className="w-4 h-4" />
+              Star
+            </a>
+            <a
+              href="https://github.com/sponsors/AlbericByte"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-border-light text-sm font-medium text-text hover:border-[#db61a2]/50 hover:text-[#db61a2] transition-colors"
+            >
+              <Heart className="w-4 h-4" />
+              Sponsor
+            </a>
+          </div>
         </div>
       </div>
     </section>
