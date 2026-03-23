@@ -87,6 +87,20 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
           className="mt-10 max-w-[640px] mx-auto"
         >
+          {/* Deploy in minutes */}
+          <div className="mb-5 text-center">
+            <p className="text-sm text-text-muted">
+              Deploy in minutes —{' '}
+              <code className="px-2 py-1 rounded-md bg-primary/10 text-primary font-mono text-sm font-semibold">
+                pip install arqondb
+              </code>
+              {' '}
+              <span className="text-[10px] font-medium text-warning bg-warning/10 px-2 py-0.5 rounded-full">
+                Coming Soon
+              </span>
+            </p>
+          </div>
+
           <div className="rounded-2xl bg-surface-dark overflow-hidden shadow-2xl shadow-black/10">
             <div className="flex items-center gap-2 px-5 py-3.5 bg-[#2a2a2c]">
               <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />

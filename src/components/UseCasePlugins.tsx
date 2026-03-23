@@ -6,7 +6,7 @@ const COUNTER_API = 'https://arqondb-counter.albericliu8.workers.dev'
 
 type Platform = 'macOS / Linux' | 'Windows'
 
-const BASE = 'https://github.com/AlbericByte/ArqonDB/releases/download/plugin-v0.1.0'
+const BASE = 'https://github.com/AlbericByte/ArqonDB/releases/download/plugin-v0.1.1'
 
 const installCmds: Record<Platform, string> = {
   'macOS / Linux': `curl -sL ${BASE}/install.sh | bash`,
@@ -19,12 +19,12 @@ const uninstallCmds: Record<Platform, string> = {
 }
 
 const plugins = [
-  { name: 'Copilot', icon: '✈', desc: 'GitHub Copilot augmented with ArqonDB memory layer for project-aware suggestions.' },
-  { name: 'Cursor', icon: '🖱', desc: 'AI-first code editor with ArqonDB-backed long-term memory for cross-session context recall.' },
-  { name: 'Claude Code', icon: '🤖', desc: "Anthropic's CLI coding assistant with persistent memory powered by ArqonDB vector + graph storage." },
-  { name: 'Cline', icon: '⚡', desc: 'Autonomous coding agent with ArqonDB-powered memory for persistent task context.' },
-  { name: 'Windsurf', icon: '🌊', desc: "Codeium's AI IDE enhanced with ArqonDB semantic memory for smarter code completions." },
-  { name: 'Codex', icon: '📦', desc: "OpenAI's Codex CLI with ArqonDB memory integration for cross-session knowledge retention." },
+  { name: 'Claude Code', icon: '🤖', desc: "Anthropic's CLI coding assistant with persistent memory powered by ArqonDB vector + graph storage.", available: true },
+  { name: 'Copilot', icon: '✈', desc: 'GitHub Copilot augmented with ArqonDB memory layer for project-aware suggestions.', available: false },
+  { name: 'Cursor', icon: '🖱', desc: 'AI-first code editor with ArqonDB-backed long-term memory for cross-session context recall.', available: false },
+  { name: 'Cline', icon: '⚡', desc: 'Autonomous coding agent with ArqonDB-powered memory for persistent task context.', available: false },
+  { name: 'Windsurf', icon: '🌊', desc: "Codeium's AI IDE enhanced with ArqonDB semantic memory for smarter code completions.", available: false },
+  { name: 'Codex', icon: '📦', desc: "OpenAI's Codex CLI with ArqonDB memory integration for cross-session knowledge retention.", available: false },
 ]
 
 const platforms: Platform[] = ['macOS / Linux', 'Windows']
@@ -282,9 +282,16 @@ export default function UseCasePlugins() {
               transition={{ duration: 0.3, delay: i * 0.05 }}
               className="rounded-xl border border-border-light bg-white p-5 hover:border-primary/30 hover:shadow-sm transition-all"
             >
-              <div className="flex items-center gap-2.5 mb-2">
-                <span className="text-lg">{p.icon}</span>
-                <h3 className="text-sm font-semibold text-text">{p.name}</h3>
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-lg">{p.icon}</span>
+                  <h3 className="text-sm font-semibold text-text">{p.name}</h3>
+                </div>
+                <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
+                  p.available ? 'text-accent bg-accent/10' : 'text-warning bg-warning/10'
+                }`}>
+                  {p.available ? 'Available' : 'Coming Soon'}
+                </span>
               </div>
               <p className="text-xs text-text-muted leading-relaxed">{p.desc}</p>
             </motion.div>

@@ -12,12 +12,15 @@ import SDKs from './components/SDKs'
 import GetStarted from './components/GetStarted'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
+import FeedbackWidget from './components/FeedbackWidget'
+import FeedbackAdmin from './components/FeedbackAdmin'
 
-type Page = 'home' | 'plugins' | 'trading'
+type Page = 'home' | 'plugins' | 'trading' | 'feedback-admin'
 
 function hashToPage(hash: string): Page {
   if (hash === '#/plugins') return 'plugins'
   if (hash === '#/trading') return 'trading'
+  if (hash === '#/admin/feedback') return 'feedback-admin'
   return 'home'
 }
 
@@ -34,6 +37,15 @@ export default function App() {
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
 
+  if (page === 'feedback-admin') {
+    return (
+      <div className="min-h-screen">
+        <Navbar />
+        <FeedbackAdmin />
+      </div>
+    )
+  }
+
   if (page === 'plugins') {
     return (
       <div className="min-h-screen">
@@ -42,6 +54,7 @@ export default function App() {
           <UseCasePlugins />
         </div>
         <Footer />
+        <FeedbackWidget />
       </div>
     )
   }
@@ -54,6 +67,7 @@ export default function App() {
           <UseCaseTrading />
         </div>
         <Footer />
+        <FeedbackWidget />
       </div>
     )
   }
@@ -71,6 +85,7 @@ export default function App() {
       <GetStarted />
       <CTA />
       <Footer />
+      <FeedbackWidget />
     </div>
   )
 }
