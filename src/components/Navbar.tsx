@@ -11,7 +11,7 @@ const links = [
 ]
 
 const useCaseItems = [
-  // { href: '#/plugins', label: 'AI Coding Plugins', icon: '🧩' },
+  { href: '#/plugins', label: 'AI Coding Plugins', icon: '🧩' },
   { href: '#/trading', label: 'Trading Agent', icon: '📈', badge: 'Coming Soon' },
 ]
 

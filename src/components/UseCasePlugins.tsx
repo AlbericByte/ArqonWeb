@@ -6,7 +6,7 @@ const COUNTER_API = 'https://arqondb-counter.albericliu8.workers.dev'
 
 type Platform = 'macOS / Linux' | 'Windows'
 
-const BASE = 'https://github.com/AlbericByte/ArqonDB/releases/download/plugin-v0.1.1'
+const BASE = 'https://github.com/AlbericByte/ArqonDB/releases/download/v0.1.1'
 
 const installCmds: Record<Platform, string> = {
   'macOS / Linux': `curl -sL ${BASE}/install.sh | bash`,
@@ -20,11 +20,11 @@ const uninstallCmds: Record<Platform, string> = {
 
 const plugins = [
   { name: 'Claude Code', icon: '🤖', desc: "Anthropic's CLI coding assistant with persistent memory powered by ArqonDB vector + graph storage.", available: true },
-  { name: 'Copilot', icon: '✈', desc: 'GitHub Copilot augmented with ArqonDB memory layer for project-aware suggestions.', available: false },
+  { name: 'GitHub Copilot', icon: '✈', desc: 'GitHub Copilot augmented with ArqonDB memory layer for project-aware suggestions.', available: false },
   { name: 'Cursor', icon: '🖱', desc: 'AI-first code editor with ArqonDB-backed long-term memory for cross-session context recall.', available: false },
   { name: 'Cline', icon: '⚡', desc: 'Autonomous coding agent with ArqonDB-powered memory for persistent task context.', available: false },
   { name: 'Windsurf', icon: '🌊', desc: "Codeium's AI IDE enhanced with ArqonDB semantic memory for smarter code completions.", available: false },
-  { name: 'Codex', icon: '📦', desc: "OpenAI's Codex CLI with ArqonDB memory integration for cross-session knowledge retention.", available: false },
+  { name: 'Codex CLI', icon: '📦', desc: "OpenAI's Codex CLI with ArqonDB memory integration for cross-session knowledge retention.", available: false },
 ]
 
 const platforms: Platform[] = ['macOS / Linux', 'Windows']
