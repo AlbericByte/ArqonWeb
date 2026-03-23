@@ -116,7 +116,7 @@ db.merge_branch(branch)`,
 
 export default function UseCase() {
   return (
-    <section id="use-case" aria-label="ArqonDB Quantitative Trading Demo - AgentStateService Workflow" className="py-24 md:py-32 bg-surface">
+    <section aria-label="ArqonDB Quantitative Trading Demo - AgentStateService Workflow" className="pt-8 pb-24 md:pt-10 md:pb-32 bg-surface">
       <div className="max-w-[980px] mx-auto px-6">
         <div className="text-center mb-20">
           <p className="text-primary text-sm font-semibold tracking-wide uppercase mb-3">Use Case</p>
@@ -128,6 +128,11 @@ export default function UseCase() {
             A production demo showing how ArqonDB's AgentStateService powers an end-to-end
             trading pipeline — from market data to execution with full causal traceability.
           </p>
+          <div className="mt-4">
+            <span className="inline-block text-sm font-medium text-warning bg-warning/10 px-4 py-1.5 rounded-full">
+              Coming Soon
+            </span>
+          </div>
         </div>
 
         {/* Flow diagram header */}

@@ -39,3 +39,17 @@
     @apply bg-primary/20 text-text-bright;
   }
 }
+
+/* Use Case carousel auto-scroll */
+@keyframes uc-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.uc-scroll-track {
+  animation: uc-scroll 20s linear infinite;
+}
+
+.uc-scroll-track:hover {
+  animation-play-state: paused;
+}
