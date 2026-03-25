@@ -24,7 +24,7 @@ const plugins = [
   { name: 'Cursor', icon: '🖱', desc: 'AI-first code editor with ArqonDB-backed long-term memory for cross-session context recall.', available: false },
   { name: 'Cline', icon: '⚡', desc: 'Autonomous coding agent with ArqonDB-powered memory for persistent task context.', available: false },
   { name: 'Windsurf', icon: '🌊', desc: "Codeium's AI IDE enhanced with ArqonDB semantic memory for smarter code completions.", available: false },
-  { name: 'Codex CLI', icon: '📦', desc: "OpenAI's Codex CLI with ArqonDB memory integration for cross-session knowledge retention.", available: false },
+  { name: 'Codex CLI', icon: '📦', desc: "OpenAI's Codex CLI with ArqonDB memory integration for cross-session knowledge retention.", available: true },
 ]
 
 const platforms: Platform[] = ['macOS / Linux', 'Windows']
