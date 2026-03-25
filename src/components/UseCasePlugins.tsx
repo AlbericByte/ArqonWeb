@@ -673,6 +673,83 @@ building something new."`}</code></pre>
                 </div>
               </div>
             </div>
+            {/* Example 5: Shared Memory — cross-tool */}
+            <div className="rounded-2xl border border-accent/20 bg-accent/[0.02] overflow-hidden">
+              <div className="px-6 py-4 border-b border-accent/10 flex items-center gap-3">
+                <span className="text-xs font-medium text-white bg-gradient-to-r from-accent to-primary px-2.5 py-1 rounded-full">Shared Memory</span>
+                <h4 className="text-sm font-semibold text-text">One memory, every AI tool</h4>
+              </div>
+              <div className="p-6 space-y-5">
+                <p className="text-sm text-text-muted leading-relaxed">
+                  ArqonDB is the shared brain across all your AI coding assistants. Save a decision in Claude Code, instantly recall it in Codex CLI — no copy-paste, no context lost when switching tools.
+                </p>
+
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[10px] font-semibold text-accent bg-accent/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Step 1 — Store in Claude Code</span>
+                    <span className="text-xs text-text-light">Save a decision during your Claude Code session</span>
+                  </div>
+                  <div className="rounded-xl bg-surface-dark overflow-hidden">
+                    <div className="flex items-center gap-2 px-4 py-2.5 bg-[#2a2a2c]">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#ff5f57]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#febc2e]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#28c840]" />
+                      <span className="ml-auto text-[10px] text-[#86868b]">Claude Code</span>
+                    </div>
+                    <pre className="p-4 text-[12px] font-mono text-[#e5e5ea] leading-[1.7] overflow-x-auto"><code>{`> "Remember: we're using Zod for all API validation.
+   Every endpoint must parse input through a Zod schema
+   before touching the database."
+
+✓ Saved to ArqonDB (auto-embedded, indexed in HNSW)
+
+> "Remember: the user service is split into two modules —
+   user-auth handles login/signup, user-profile handles
+   everything else. Don't merge them."
+
+✓ Saved to ArqonDB`}</code></pre>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[10px] font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Step 2 — Recall in Codex CLI</span>
+                    <span className="text-xs text-text-light">Switch tools — your context follows you</span>
+                  </div>
+                  <div className="rounded-xl bg-surface-dark overflow-hidden">
+                    <div className="flex items-center gap-2 px-4 py-2.5 bg-[#2a2a2c]">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#ff5f57]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#febc2e]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#28c840]" />
+                      <span className="ml-auto text-[10px] text-[#86868b]">Codex CLI</span>
+                    </div>
+                    <pre className="p-4 text-[12px] font-mono text-[#e5e5ea] leading-[1.7] overflow-x-auto"><code>{`$ codex "Add a new endpoint to update user display name"
+
+# Codex CLI queries ArqonDB — finds memories stored by
+# Claude Code earlier:
+
+┌─────────────────────────────────────────────────────┐
+│ 0.95  "Using Zod for all API validation. Every      │
+│        endpoint must parse input through a Zod      │
+│        schema before touching the database."        │
+│ 0.92  "User service is split — user-auth handles    │
+│        login/signup, user-profile handles the rest.  │
+│        Don't merge them."                           │
+└─────────────────────────────────────────────────────┘
+
+Codex: "I'll add the endpoint to the user-profile module
+(not user-auth, since this isn't login/signup). I'll
+create a Zod schema for the display name input first."
+
+  Created: src/user-profile/schemas/updateName.ts
+  ├─ z.object({ displayName: z.string().min(1).max(50) })
+  Modified: src/user-profile/routes.ts
+  └─ PATCH /users/:id/display-name → validated via Zod
+
+✓ Both conventions followed — no extra prompting needed.`}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>
